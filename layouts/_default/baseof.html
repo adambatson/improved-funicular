@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {{ $styles := resources.Get "post-css/main.css" }}
+    {{ if .Site.IsServer }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" />
+    {{ else }}
+    {{ $styles := $styles | minify | fingerprint | resources.PostProcess }}
+    <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}" />
+    {{ end }}
+</head>
+
+<body class="h-full flex flex-col bg-coral">
+
+    <div class="page-wrapper flex justify-center mt-0">
+        <div class="page-content leading-6 w-90 p-4 flex flex-col justify-around">
+            {{ block "main" . }}{{ end }}
+        </div>
+    </div>
+
+</body>
+
+</html>
